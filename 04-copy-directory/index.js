@@ -25,8 +25,14 @@ fs.readdir(newFolderPath, (err, newFiles) => {
     if (err) throw err;
 
     files.forEach((file) => {
-      fs.writeFile(path.join(newFolderPath, file), '', (err) => {
+      let currentPathFile = path.join(folderPath, `${file}`);
+
+      fs.readFile(currentPathFile, 'utf-8', (err, data) => {
         if (err) throw err;
+
+        fs.writeFile(path.join(newFolderPath, file), data, (err) => {
+          if (err) throw err;
+        });
       });
     });
   });
