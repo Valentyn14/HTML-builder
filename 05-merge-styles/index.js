@@ -21,7 +21,7 @@ fs.readdir(folderStylesPath, (err, files) => {
     fs.stat(currentPathFile, (err, stats) => {
       if (err) throw err;
 
-      if (stats.isFile && path.extname(file) === '.css') {
+      if (stats.isFile() && path.extname(file) === '.css') {
         fs.readFile(currentPathFile, 'utf-8', (err, data) => {
           if (err) throw err;
 
