@@ -8,20 +8,25 @@ const readline = require('readline');
 
 const rl = readline.createInterface(process.stdin, process.stdout);
 
-const createFile = () => {
-  fs.writeFile(pathText, '', (err) => {
+const createFile = (text) => {
+  fs.writeFile(pathText, text, (err) => {
     if (err) throw err;
   });
 };
 
-createFile();
+fs.readdir(__dirname, (err, files) => {
+  if (err) throw err;
+
+  if (files.length < 3) {
+    createFile('');
+  }
+});
 
 rl.setPrompt('Hello! Please write the some text.\n');
 rl.prompt();
 rl.on('line', (text) => {
   if (text === 'exit') {
     console.log('Goodbye, have a nice day!');
-    createFile();
     rl.close();
   } else {
     fs.appendFile(pathText, `${text}\n`, (err) => {
@@ -32,6 +37,5 @@ rl.on('line', (text) => {
 
 rl.on('SIGINT', () => {
   console.log('Goodbye, have a nice day!');
-  createFile();
   rl.close();
 });
