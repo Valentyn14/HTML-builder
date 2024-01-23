@@ -15,7 +15,15 @@ fs.readdir(pathFolder, (err, files) => {
 
       if (stats.isFile()) {
         let nameFile = file.split('.')[0];
-        let extensionFile = path.extname(file).split('.')[1];
+        if (nameFile.split('.')[0] === '') {
+          nameFile = file.split('.')[1];
+        }
+        let extensionFile = path.extname(file);
+        if (extensionFile === '') {
+          extensionFile = path.extname(file);
+        } else {
+          extensionFile = path.extname(file).split('.')[1];
+        }
         let res = `${nameFile} - ${extensionFile} - ${stats.size}b`;
         console.log(res);
       }
